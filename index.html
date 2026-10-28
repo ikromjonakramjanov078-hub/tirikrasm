@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <title>TIRIK RASM — San'at jonlansin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <a href="#" class="logo">
+      <span class="logo-icon">✳</span>
+      <span>TIRIK <b>RASM</b><small>RAQAMLI SAN'AT LABORATORIYASI</small></span>
+    </a>
+    <div class="live-status"><i></i> IJOD MAYDONI FAOL</div>
+    <button id="saveBtn" class="save-btn">↧ <span>SAQLASH</span></button>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="section-title">01 / CHIZISH ASBOBLARI</div>
+
+      <div class="tool-grid">
+        <button class="tool active" data-tool="draw"><span>✎</span> Chizish</button>
+        <button class="tool" data-tool="erase"><span>⌫</span> O‘chirg‘ich</button>
+        <button class="tool" data-tool="move"><span>✧</span> Zarrachalar</button>
+        <button class="tool" data-tool="clear"><span>↺</span> Tozalash</button>
+      </div>
+
+      <div class="control">
+        <div class="control-heading"><label for="brushSize">Chiziq qalinligi</label><output id="brushSizeVal">4</output></div>
+        <input id="brushSize" type="range" min="1" max="24" value="4">
+      </div>
+
+      <div class="control">
+        <div class="control-heading"><label for="glow">Yorqinlik</label><output id="glowVal">18</output></div>
+        <input id="glow" type="range" min="0" max="35" value="18">
+      </div>
+
+      <div class="control">
+        <div class="control-heading"><label for="speed">Harakat tezligi</label><output id="speedVal">5</output></div>
+        <input id="speed" type="range" min="1" max="10" value="5">
+      </div>
+
+      <div class="section-title section-spaced">02 / RANG TANLASH</div>
+      <div class="colors" id="colors">
+        <button class="swatch selected" data-color="#ffd21f" style="--swatch:#ffd21f" aria-label="Oltin"></button>
+        <button class="swatch" data-color="#fff3a3" style="--swatch:#fff3a3" aria-label="Oltin oq"></button>
+        <button class="swatch" data-color="#ff7043" style="--swatch:#ff7043" aria-label="Olov"></button>
+        <button class="swatch" data-color="#ff4fa3" style="--swatch:#ff4fa3" aria-label="Pushti"></button>
+        <button class="swatch" data-color="#b18cff" style="--swatch:#b18cff" aria-label="Binafsha"></button>
+        <button class="swatch" data-color="#56e6cf" style="--swatch:#56e6cf" aria-label="Yashil havorang"></button>
+        <button class="swatch" data-color="#ffffff" style="--swatch:#ffffff" aria-label="Oq"></button>
+        <button class="swatch" data-color="#ff3838" style="--swatch:#ff3838" aria-label="Qizil"></button>
+      </div>
+
+      <div class="section-title section-spaced">03 / JONLANTIRISH</div>
+      <label class="select-label" for="effect">Harakat turi</label>
+      <select id="effect">
+        <option value="flow">Oltin oqim</option>
+        <option value="particles">Zarrachalar portlashi</option>
+        <option value="galaxy">Galaktika</option>
+        <option value="wave">Nur to‘lqini</option>
+        <option value="fireflies">Sehrli yulduzlar</option>
+      </select>
+
+      <div class="button-stack">
+        <button class="action-btn" id="animateBtn">✦ RASMNI JONLANTIRISH</button>
+        <button class="secondary-btn" id="pauseBtn">Ⅱ Harakatni to‘xtatish</button>
+        <button class="secondary-btn" id="undoBtn">↶ Oxirgi chiziqni qaytarish</button>
+      </div>
+
+      <div class="tip">
+        <span>✧</span>
+        <p>Maslahat: sichqoncha yoki barmog‘ing bilan chiz. So‘ng jonlantirish tugmasini bos!</p>
+      </div>
+    </aside>
+
+    <section class="studio">
+      <div class="studio-top">
+        <div>
+          <span class="eyebrow">IJODIY MAYDON</span>
+          <h1>G‘oyangga <span>jon ber.</span></h1>
+        </div>
+        <div class="canvas-status"><i></i> <span id="statusText">CHIZISHGA TAYYOR</span></div>
+      </div>
+
+      <div class="canvas-frame" id="canvasFrame">
+        <div class="canvas-label">TIRIK RASM <span>•</span> 001</div>
+        <canvas id="artCanvas" aria-label="Rasm chizish maydoni"></canvas>
+        <canvas id="fxCanvas" aria-hidden="true"></canvas>
+        <div class="empty-hint" id="emptyHint">
+          <div class="hint-symbol">✳</div>
+          <strong>Bu yerda san'at uyg‘onadi.</strong>
+          <span>Chizishni boshlash uchun bosing va torting.</span>
+        </div>
+        <div class="canvas-coordinates" id="coordinates">X: 000 · Y: 000</div>
+      </div>
+
+      <div class="studio-bottom">
+        <div class="mini-stat"><span class="stat-dot"></span><span id="modeText">ERKIN CHIZISH</span></div>
+        <div class="mini-stat">CHIZIQLAR: <b id="strokeCount">0</b></div>
+        <button class="text-action" id="fullscreenBtn">⛶ KATTA EKRAN</button>
+      </div>
+
+      <section class="challenge">
+        <div class="challenge-heading">
+          <div><span class="eyebrow">IJODIY MISSIYA</span><h2>San'at sinovi</h2></div>
+          <span class="mission-count" id="missionCount">01 / 03</span>
+        </div>
+        <p id="missionText">Oltin rangda kamida 3 ta chiziq chizib, asaringni jonlantir.</p>
+        <div class="mission-bottom">
+          <div class="mission-progress"><span id="missionProgress"></span></div>
+          <span id="missionState">BOSHLANMAGAN</span>
+          <button id="missionBtn" class="mission-btn">MISSIYANI BAJARISH ↗</button>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <footer><span>TIRIK RASM © 2026</span><span>HAR BIR CHIZIQ — YANGI OLAM.</span></footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
